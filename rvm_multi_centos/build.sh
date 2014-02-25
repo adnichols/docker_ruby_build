@@ -29,8 +29,6 @@ RUN /bin/bash -l -c 'for v in \$(cat /root/versions.txt); do rvm use \$v; gem in
 # Build package
 ADD fpm /
 RUN bash -l -c "bundle install"
-RUN bash -l -c "bundle exec fpm --help"
-
 RUN bash -l -c "bundle exec fpm \
   -s dir \
   -t rpm \

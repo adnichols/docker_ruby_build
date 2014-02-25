@@ -7,12 +7,12 @@ cat > Dockerfile <<EOF
 FROM centos:latest
 MAINTAINER Aaron Nichols anichols@trumped.org
 
+RUN rpm -ivh http://mirror.pnl.gov/epel/6/i386/epel-release-6-8.noarch.rpm
 RUN yum -y install gcc-c++ patch readline readline-devel \
   zlib zlib-devel libyaml-devel libffi-devel openssl-devel \
   make bzip2 autoconf automake libtool bison iconv-devel git-core \
   curl wget rpm-build
 RUN yum clean all
-RUN rpm -ivh http://mirror.pnl.gov/epel/6/i386/epel-release-6-8.noarch.rpm
 
 # Setup rbenv and ruby-build
 RUN git clone https://github.com/sstephenson/rbenv.git /usr/local/rbenv
@@ -34,8 +34,6 @@ RUN bash -l -c 'for v in \$(cat /root/versions.txt); do rbenv global \$v; gem in
 # Build package
 ADD fpm /
 RUN bash -l -c "bundle install"
-RUN bash -l -c "bundle exec fpm --help"
-
 RUN bash -l -c "bundle exec fpm \
   -s dir \
   -t rpm \

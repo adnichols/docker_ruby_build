@@ -31,8 +31,6 @@ RUN bash -l -c 'for v in \$(cat /root/versions.txt); do rbenv global \$v; gem in
 # Build package
 ADD fpm /
 RUN bash -l -c "bundle install"
-RUN bash -l -c "bundle exec fpm --help"
-
 RUN bash -l -c "bundle exec fpm \
   -s dir \
   -t deb \
