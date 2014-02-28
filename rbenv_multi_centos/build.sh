@@ -8,7 +8,7 @@ FROM centos:latest
 MAINTAINER Aaron Nichols anichols@trumped.org
 
 RUN rpm -ivh http://mirror.pnl.gov/epel/6/i386/epel-release-6-8.noarch.rpm
-RUN yum -y install gcc-c++ patch readline readline-devel \
+RUN yum --disableplugin=fastestmirror -y install gcc-c++ patch readline readline-devel \
   zlib zlib-devel libyaml-devel libffi-devel openssl-devel \
   make bzip2 autoconf automake libtool bison iconv-devel git-core \
   curl wget rpm-build
@@ -19,6 +19,9 @@ RUN git clone https://github.com/sstephenson/rbenv.git /usr/local/rbenv
 RUN git clone https://github.com/sstephenson/ruby-build.git /usr/local/rbenv/plugins/ruby-build
 RUN PREFIX=/usr/local/rbenv /usr/local/rbenv/plugins/ruby-build/install.sh
 ENV PATH /usr/local/rbenv/bin:\$PATH
+ENV RBENV_ROOT /usr/local/rbenv
+RUN echo 'export RBENV_ROOT=/usr/local/rbenv' >> /etc/profile.d/rbenv.sh
+RUN echo 'export PATH=\$RBENV_ROOT/bin:\$PATH' >> /etc/profile.d/rbenv.sh
 RUN echo 'eval "\$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
 
 # Install multiple versions of ruby

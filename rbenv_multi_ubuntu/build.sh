@@ -16,6 +16,9 @@ RUN git clone https://github.com/sstephenson/rbenv.git /usr/local/rbenv
 RUN git clone https://github.com/sstephenson/ruby-build.git /usr/local/rbenv/plugins/ruby-build
 RUN PREFIX=/usr/local/rbenv /usr/local/rbenv/plugins/ruby-build/install.sh
 ENV PATH /usr/local/rbenv/bin:\$PATH
+ENV RBENV_ROOT /usr/local/rbenv
+RUN echo 'export RBENV_ROOT=/usr/local/rbenv' >> /etc/profile.d/rbenv.sh
+RUN echo 'export PATH=\$RBENV_ROOT/bin:\$PATH' >> /etc/profile.d/rbenv.sh
 RUN echo 'eval "\$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
 
 # Install multiple versions of ruby
